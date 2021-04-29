@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>ログイン</title>
+        <!-- <link rel="stylesheet" href="style.css"> -->
+    </head>
+    <body>
+        <div style="text-align: center;">
+            <h1>ログイン</h1>
+
+            <!-- フォーム -->
+            <form id="login_form">
+                <input type="text" id="username" placeholder="Username">
+                <br>
+                <input type="password" id="password" placeholder="Password">
+                <br>
+                <input type="button" id="login" value="Login">
+            </form>
+        </div>
+        <!-- ログイン処理 -->
+        <script language="JavaScript" type="text/javascript">
+            window.addEventListener('load', (event) => {
+                event.preventDefault();
+                document.getElementById('login').addEventListener('click', () => {
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    
+                    fetch('login.js', {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            "Content-Type": "text/html"
+                        },
+                        body: JSON.stringify({'username': username, 'password': password })
+                    })
+                    .then((res) =>{
+                        console.log('response received');
+                        if (!res.ok) {
+                            throw new Error(`${res.status} ${res.statusText}`);
+                        }
+                        return response.text();
+                    })
+                    .then((text) => {
+                        alert(text);
+                    })
+                    .catch((reason) => {
+                        alert(reason);
+                    });
+                });
+            });
+        </script>
+    </body>
+</html>
