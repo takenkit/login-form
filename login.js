@@ -2,7 +2,6 @@
 const http = require('http');
 const fs = require('fs');
 const login = fs.readFileSync('login.html');
-const result = fs.readFileSync('result.html');
 const hostname = '127.0.0.1';
 const port = 3000;
 
@@ -15,10 +14,21 @@ const server = http.createServer((req, res) => {
         req.on('data', (chunk) => {
             data += chunk;
         });
-        req.on('end', () => {      
-            console.log(data.toString());      
-            if (data['username'] === 'takenkit' && data['password'] === 'XXXX') {
+        req.on('end', () => {    
+            var json = JSON.parse(data);
+            if (json['username'] == 'takenkit') {
+                console.log('username OK');
+                if (json['password'] == 'xxxx') {
+                    console.log('password OK');
 
+                    json['username'] = 'Hello, ' + json['username'] + '!!';
+                    res.writeHead(200, {'Content-Type': 'application/json'});
+                    res.end(JSON.stringify(json));
+                } else {
+                    console.log('password NG');
+                }
+            } else {
+                console.log('username NG');
             }
         });
     }

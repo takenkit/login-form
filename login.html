@@ -25,24 +25,22 @@
                 document.getElementById('login').addEventListener('click', () => {
                     const username = document.getElementById('username').value;
                     const password = document.getElementById('password').value;
-                    
-                    fetch('login.js', {
+                    fetch('response.json', {
                         method: 'POST',
-                        mode: 'cors',
                         headers: {
-                            "Content-Type": "text/html"
+                            "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({'username': username, 'password': password })
+                        body: JSON.stringify({ 'username': username, 'password': password })
                     })
                     .then((res) =>{
                         console.log('response received');
                         if (!res.ok) {
                             throw new Error(`${res.status} ${res.statusText}`);
                         }
-                        return response.text();
+                        return res.json();
                     })
-                    .then((text) => {
-                        alert(text);
+                    .then((json) => {
+                        alert(json["username"]);
                     })
                     .catch((reason) => {
                         alert(reason);
