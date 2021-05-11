@@ -26,6 +26,9 @@
                     const password = document.getElementById('password').value;
                     var options = {
                         method: 'POST',
+                        Headers: {
+                            'Content-Type' : 'application/json'
+                        },
                         body: JSON.stringify({ 'username': username, 'password': password })
                     };
                     fetch('/login', options)
