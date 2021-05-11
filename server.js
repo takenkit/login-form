@@ -1,5 +1,6 @@
 'use strict';
 const http = require('http');
+const https = require('https');
 const fs = require('fs');
 const form = fs.readFileSync('form.html');
 const home = fs.readFileSync('home.html');
@@ -17,6 +18,7 @@ const server = http.createServer((req, res) => {
             data += chunk;
         });
         req.on('end', () => {
+            console.log(typeof data);
             var query = qs.parse(data);
             var username = query['username'];
             var password = query['password'];
@@ -28,9 +30,16 @@ const server = http.createServer((req, res) => {
                     res.end(home);
                 } else {
                     console.log('password NG');
+                    // ユーザ名またはパスワードが間違っています
+                    // 何かを送信する
+                    res.writeHead(401, {'Content-Type': 'application/json'})
+                    res.end();
                 }
             } else {
                 console.log('username NG');
+                // ユーザ名またはパスワードが間違っています
+                    res.writeHead(401, {'Content-Type': 'application/json'});
+                    res.end();
             }
         });
     }

@@ -10,13 +10,39 @@
             <h1>ログイン</h1>
 
             <!-- フォーム -->
-            <form id="login_form" action="/login" method="post">
+            <form id="login_form" method="post">
                 <input type="text" name="username" id="username" placeholder="Username">
-                <br>
+                <br><!-- window.cryptoを使って暗号化して送信する？？？ -->
                 <input type="password" name="password" id="password" placeholder="Password">
                 <br>
                 <input type="submit" id="login" value="Login">
             </form>
         </div>
+        <script language="JavaScript" type="text/javascript">
+            window.addEventListener('load', (event) => {
+                event.preventDefault();
+                document.getElementById('login_form').addEventListener('submit', () => {
+                    var formdata = new FormData(document.getElementById("login_form"));
+                    var options = {
+                        method: 'POST',
+                        body: formdata
+                    };
+                    fetch('/login', options)
+                    .then((res) =>{
+                        console.log('response received');
+                        if (!res.ok) {
+                            throw new Error(`${res.status} ${res.statusText}`);
+                        }
+                        return res.json();
+                    })
+                    .then((json) => {
+                        alert(json["username"]);
+                    })
+                    .catch((reason) => {
+                        alert(reason);
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
