@@ -8,7 +8,9 @@ const qs = require('querystring');
 const hostname = '127.0.0.1';
 const port = 3000;
 
-const server = http.createServer((req, res) => {
+const server = http.createServer();
+
+server.on('request', (req, res) => {
     if (req.method === 'GET') {
         res.writeHead(200, {'Content-Type': 'text/html'});
         res.end(form);
@@ -42,6 +44,7 @@ const server = http.createServer((req, res) => {
         });
     }
 });
+
 
 // HTTPサーバ起動
 server.listen(port, hostname, () => {
