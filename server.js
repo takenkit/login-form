@@ -32,14 +32,14 @@ const server = http.createServer((req, res) => {
                     console.log('password NG');
                     // ユーザ名またはパスワードが間違っています
                     // 何かを送信する
-                    res.writeHead(401, {'Content-Type': 'application/json'})
+                    res.statusCode = 401;
                     res.end();
                 }
             } else {
                 console.log('username NG');
                 // ユーザ名またはパスワードが間違っています
-                    res.writeHead(401, {'Content-Type': 'application/json'});
-                    res.end();
+                res.statusCode = 401;
+                res.end();
             }
         });
     }
