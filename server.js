@@ -18,8 +18,7 @@ server.on('request', (req, res) => {
         var data = '';
         req.on('data', (chunk) => {
             data += chunk;
-        });
-        req.on('end', () => {
+        }).on('end', () => {
             var json = JSON.parse(data);
             var username = json['username'];
             var password = json['password'];
