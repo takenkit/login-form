@@ -18,10 +18,9 @@ const server = http.createServer((req, res) => {
             data += chunk;
         });
         req.on('end', () => {
-            console.log(typeof data);
-            var query = qs.parse(data);
-            var username = query['username'];
-            var password = query['password'];
+            var json = JSON.parse(data);
+            var username = json['username'];
+            var password = json['password'];
             if (username == 'takenkit') {
                 console.log('username OK');
                 if (password== 'xxxx') {
@@ -31,7 +30,6 @@ const server = http.createServer((req, res) => {
                 } else {
                     console.log('password NG');
                     // ユーザ名またはパスワードが間違っています
-                    // 何かを送信する
                     res.statusCode = 401;
                     res.end();
                 }

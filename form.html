@@ -22,10 +22,11 @@
             window.addEventListener('load', (event) => {
                 event.preventDefault();
                 document.getElementById('login_form').addEventListener('submit', () => {
-                    var formdata = new FormData(document.getElementById("login_form"));
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
                     var options = {
                         method: 'POST',
-                        body: formdata
+                        body: JSON.stringify({ 'username': username, 'password': password })
                     };
                     fetch('/login', options)
                     .then((res) =>{
